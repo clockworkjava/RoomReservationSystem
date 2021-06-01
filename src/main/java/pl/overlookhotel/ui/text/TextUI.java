@@ -8,6 +8,7 @@ import pl.overlookhotel.room.Room;
 import pl.overlookhotel.room.RoomService;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class TextUI {
@@ -33,13 +34,12 @@ public class TextUI {
 
             boolean isMale = false;
 
-            if (genderOption ==1){
+            if (genderOption == 1) {
                 isMale = true;
             }
 
             Guest newGuest = guestService.createNewGuest(firstName, lastName, age, isMale);
-            String info = newGuest.getInfo();
-            System.out.println(info);
+            System.out.println("Dodano nowego gościa: " + newGuest.getInfo());
 
         } catch (InputMismatchException e) {
             throw new OnlyNumberException("User only numbers when choosing age or gender");
@@ -104,24 +104,36 @@ public class TextUI {
             System.out.println("Wystąpił niespodziewany błąd");
             System.out.println("Komunikat błędu: " + e.getMessage());
             e.printStackTrace();
-        } finally {
-            System.out.println("Wychodzę z aplikacji");
         }
-
     }
 
     private void performAction(Scanner scanner) {
 
-        int option = getActionFromUser(scanner);
+        int option = -1;
 
-        if (option == 1) {
-            readNewGuestData(scanner);
-        } else if (option == 2) {
-            readNewRoomData(scanner);
-        } else if (option == 3) {
-            System.out.println("Wybrano opcję wyszukaj gościa");
-        } else {
-            throw new WrongOptionException("Wrong option in main menu");
+        while (option != 0) {
+            option = getActionFromUser(scanner);
+
+            if (option == 1) {
+                readNewGuestData(scanner);
+            } else if (option == 2) {
+                readNewRoomData(scanner);
+            } else if (option == 3) {
+                System.out.println("Aktualni goście:");
+                showAllGuests();
+            } else if (option == 0) {
+                System.out.println("Wychodzę z aplikacji");
+            } else {
+                throw new WrongOptionException("Wrong option in main menu");
+            }
+        }
+    }
+
+    private void showAllGuests() {
+        List<Guest> guests = this.guestService.getAllGuests();
+
+        for ( Guest guest : guests){
+            System.out.println(guest.getInfo());
         }
     }
 
@@ -129,7 +141,8 @@ public class TextUI {
     private int getActionFromUser(Scanner scanner) {
         System.out.println("1. Dodaj nowego gościa");
         System.out.println("2. Dodaj nowy pokój");
-        System.out.println("3. Wyszukaj gościa");
+        System.out.println("3. Pokaż listę wszystkich gości");
+        System.out.println("0. Wyjście z aplikacji");
         System.out.println("Wybierz opcję: ");
 
         int option;
