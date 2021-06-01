@@ -13,10 +13,19 @@ public class GuestService {
         if (isMale) {
             gender = Gender.MALE;
         }
+
         return repository.createNewGuest(firstName, lastName, age, gender);
     }
 
     public List<Guest> getAllGuests() {
         return this.repository.getAll();
+    }
+
+    public void saveAll() {
+        this.repository.saveAll();
+    }
+
+    public void readAll() {
+        this.repository.readAll();
     }
 }

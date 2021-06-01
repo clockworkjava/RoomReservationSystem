@@ -92,6 +92,11 @@ public class TextUI {
     }
 
     public void showMainMenu() {
+
+        System.out.println("Trwa ładowanie danych...");
+        this.guestService.readAll();
+        System.out.println("Dane załadowane");
+
         Scanner scanner = new Scanner(System.in);
 
         try {
@@ -116,6 +121,7 @@ public class TextUI {
 
             if (option == 1) {
                 readNewGuestData(scanner);
+                this.guestService.saveAll();
             } else if (option == 2) {
                 readNewRoomData(scanner);
             } else if (option == 3) {
