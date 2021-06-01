@@ -2,6 +2,8 @@ package pl.overlookhotel.room;
 
 import pl.overlookhotel.exceptions.WrongOptionException;
 
+import java.util.List;
+
 public class RoomService {
 
     private final RoomRepository repository = new RoomRepository();
@@ -27,8 +29,10 @@ public class RoomService {
             bedTypes[i] = bedType;
         }
 
-
         return repository.createNewRoom(number, bedTypes);
     }
 
+    public List<Room> getAllRooms() {
+        return this.repository.getAllRooms();
+    }
 }

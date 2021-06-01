@@ -1,10 +1,20 @@
 package pl.overlookhotel.room;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RoomRepository {
 
-    Room createNewRoom(int number, BedType[] bedTypes) {
+    private final List<Room> rooms = new ArrayList<>();
 
-        return new Room(number, bedTypes);
+    Room createNewRoom(int number, BedType[] bedTypes) {
+        Room newRoom = new Room(number, bedTypes);
+        rooms.add(newRoom);
+
+        return newRoom;
     }
 
+    public List<Room> getAllRooms() {
+        return this.rooms;
+    }
 }

@@ -5,9 +5,9 @@ public class Room {
     private final int number;
     private final BedType[] beds;
 
-    Room(int number, BedType[] beds) {
+    Room(int number, BedType[] bedTypes) {
         this.number = number;
-        this.beds = beds;
+        this.beds = bedTypes;
     }
 
     public String getInfo() {
@@ -17,6 +17,6 @@ public class Room {
             bedInfo.append("\t ").append(bed.getDescription()).append("\n");
         }
 
-        return String.format("Dodano nowy pokój nr %d %s", this.number, bedInfo);
+        return String.format("Numer pokoju: %d %s", this.number, bedInfo);
     }
 }

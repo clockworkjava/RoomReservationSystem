@@ -14,7 +14,7 @@ public class Guest {
         this.gender = gender;
     }
 
-    public String getInfo(){
+    public String getInfo() {
         return String.format("%s %s (%d) %s ", this.firstName,
                 this.lastName, this.age, this.gender.getDescription());
     }
