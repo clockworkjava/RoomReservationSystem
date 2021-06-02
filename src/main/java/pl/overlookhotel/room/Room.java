@@ -2,10 +2,12 @@ package pl.overlookhotel.room;
 
 public class Room {
 
+    private final int id;
     private final int number;
     private final BedType[] beds;
 
-    Room(int number, BedType[] bedTypes) {
+    Room(int id, int number, BedType[] bedTypes) {
+        this.id = id;
         this.number = number;
         this.beds = bedTypes;
     }
@@ -17,7 +19,7 @@ public class Room {
             bedInfo.append("\t ").append(bed.getDescription()).append("\n");
         }
 
-        return String.format("Numer pokoju: %d %s", this.number, bedInfo);
+        return String.format("%d Numer: %d %s",this.id, this.number, bedInfo);
     }
 
     String toCSV() {
@@ -30,7 +32,10 @@ public class Room {
 
         String bedTypes = String.join("#", bedsAsString);
 
-        return String.format("%d,%s%s", this.number, bedTypes, System.getProperty("line.separator"));
+        return String.format("%d,%d,%s%s", this.id, this.number, bedTypes, System.getProperty("line.separator"));
     }
 
+    public int getId() {
+        return id;
+    }
 }

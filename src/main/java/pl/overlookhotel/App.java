@@ -16,7 +16,7 @@ public class App {
         try {
             Properties.createDataDirectory();
         } catch (IOException e) {
-        throw new PersistenceToFileException(Properties.DATA_DIRECTORY.toString(), "create", "directory");
+            throw new PersistenceToFileException(Properties.DATA_DIRECTORY.toString(), "create", "directory");
         }
         textUI.showSystemInfo();
         textUI.showMainMenu();

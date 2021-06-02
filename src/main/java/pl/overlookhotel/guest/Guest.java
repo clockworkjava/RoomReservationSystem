@@ -2,12 +2,14 @@ package pl.overlookhotel.guest;
 
 public class Guest {
 
+    private final int id;
     private final String firstName;
     private final String lastName;
     private final int age;
     private final Gender gender;
 
-    Guest(String firstName, String lastName, int age, Gender gender) {
+    Guest(int id, String firstName, String lastName, int age, Gender gender) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -15,14 +17,17 @@ public class Guest {
     }
 
     public String getInfo() {
-        return String.format("%s %s (%d) (%s) ", this.firstName,
+        return String.format("%d %s %s (%d) (%s) ",
+                this.id,
+                this.firstName,
                 this.lastName,
                 this.age,
                 this.gender.getDescription());
     }
 
     String toCSV() {
-        return String.format("%s,%s,%d,%s%s",
+        return String.format("%s,%s,%s,%d,%s%s",
+                this.id,
                 this.firstName,
                 this.lastName,
                 this.age,
@@ -30,4 +35,7 @@ public class Guest {
                 System.getProperty("line.separator"));
     }
 
+    public int getId() {
+        return id;
+    }
 }
