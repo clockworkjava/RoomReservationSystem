@@ -21,7 +21,7 @@ public class GuestRepository {
         return newGuest;
     }
 
-    Guest addGuestFromFile(int id, String firstName, String lastName, int age, Gender gender) {
+    Guest addExistingGuest(int id, String firstName, String lastName, int age, Gender gender) {
         Guest newGuest = new Guest(id, firstName, lastName, age, gender);
         guests.add(newGuest);
         return newGuest;
@@ -54,7 +54,7 @@ public class GuestRepository {
 
         Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
 
-        if (!Files.exists(file)){
+        if (!Files.exists(file)) {
             return;
         }
 
@@ -69,7 +69,7 @@ public class GuestRepository {
                 String lastName = guestData[2];
                 int age = Integer.parseInt(guestData[3]);
                 Gender gender = Gender.valueOf(guestData[4]);
-                addGuestFromFile(id, firstName, lastName, age, gender);
+                addExistingGuest(id, firstName, lastName, age, gender);
             }
         } catch (IOException e) {
             throw new PersistenceToFileException(file.toString(), "read", "guests data");
@@ -86,4 +86,24 @@ public class GuestRepository {
         return max + 1;
     }
 
+    public void remove(int id) {
+        int guestToBeRemovedIndex = -1;
+
+        for (int i = 0; i < this.guests.size(); i++) {
+            if (this.guests.get(i).getId() == id) {
+                guestToBeRemovedIndex = i;
+                break;
+            }
+        }
+
+        if (guestToBeRemovedIndex > -1) {
+            this.guests.remove(guestToBeRemovedIndex);
+        }
+    }
+
+
+    public void edit(int id, String firstName, String lastName, int age, Gender gender) {
+        this.remove(id);
+        this.addExistingGuest(id, firstName, lastName, age, gender);
+    }
 }

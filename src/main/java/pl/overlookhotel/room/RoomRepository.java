@@ -1,7 +1,6 @@
 package pl.overlookhotel.room;
 
 import pl.overlookhotel.exceptions.PersistenceToFileException;
-import pl.overlookhotel.guest.Guest;
 import pl.overlookhotel.util.Properties;
 
 import java.io.IOException;
@@ -23,7 +22,7 @@ public class RoomRepository {
         return newRoom;
     }
 
-    Room addNewRoomFromFile(int id, int number, BedType[] bedTypes) {
+    Room addExistingRom(int id, int number, BedType[] bedTypes) {
         Room newRoom = new Room(id, number, bedTypes);
         rooms.add(newRoom);
 
@@ -75,7 +74,7 @@ public class RoomRepository {
                 for (int i = 0; i < bedTypes.length; i++) {
                     bedTypes[i] = BedType.valueOf(bedsTypesAsString[i]);
                 }
-                addNewRoomFromFile(id, number, bedTypes);
+                addExistingRom(id, number, bedTypes);
             }
         } catch (IOException e) {
             throw new PersistenceToFileException(file.toString(), "read", "room data");
@@ -92,4 +91,25 @@ public class RoomRepository {
         return max + 1;
     }
 
+    public void remove(int id) {
+        int roomToBeRemovedIndex = -1;
+
+        for (int i = 0; i < this.rooms.size(); i++) {
+            if (this.rooms.get(i).getId() == id){
+                roomToBeRemovedIndex = i;
+                break;
+            }
+
+            if (roomToBeRemovedIndex > -1) {
+                this.rooms.remove(roomToBeRemovedIndex);
+            }
+        }
+    }
+
+
+    public void edit(int id, int number, BedType[] bedTypes) {
+        this.remove(id);
+        this.addExistingRom(id, number, bedTypes);
+
+    }
 }

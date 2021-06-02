@@ -134,12 +134,93 @@ public class TextUI {
             } else if (option == 4) {
                 System.out.println("Wszystkie dodane pokoje:");
                 showAllAddedRooms();
+            } else if (option ==5){
+                System.out.println("usuwanie gościa");
+                removeGuest(scanner);
+            } else if (option ==6){
+                System.out.println("edycja danych gościa");
+                editGuest(scanner);
+            } else if (option ==7){
+                System.out.println("usuwanie pokoju");
+                removeRoom(scanner);
+            } else if (option ==8){
+                System.out.println("edycja pokoju");
+                editRoom(scanner);
             } else if (option == 0) {
                 System.out.println("Wychodzę z aplikacji");
             } else {
                 throw new WrongOptionException("Wrong option in main menu");
             }
         }
+    }
+
+    private void editRoom(Scanner scanner) {
+        System.out.println("Podaj ID pokoju, który chcesz edytować");
+        try {
+            int id = scanner.nextInt();
+            System.out.println("Numer:");
+            int number = scanner.nextInt();
+            int[] bedTypes = chooseBedType(scanner);
+            roomService.editRoom(id, number, bedTypes);
+
+        } catch (InputMismatchException e) {
+            throw new OnlyNumberException("Use numbers when inserting ID");
+        }
+    }
+
+    private void removeRoom(Scanner scanner) {
+        System.out.println("Podaj ID pokoju do usunięcia");
+        try {
+            int id = scanner.nextInt();
+            this.roomService.removeRoom(id);
+
+        } catch (InputMismatchException e) {
+            throw new OnlyNumberException("Use numbers when inserting ID");
+        }
+
+    }
+
+    private void editGuest(Scanner scanner) {
+        System.out.println("Podaj ID gościa, którego dane chcesz edytować");
+        try {
+            int id = scanner.nextInt();
+
+            System.out.println("Podaj imię: ");
+            String firstName = scanner.next();
+            System.out.println("Podaj nazwisko: ");
+            String lastName = scanner.next();
+            System.out.println("Podaj wiek: ");
+            int age = scanner.nextInt();
+            System.out.println("Podaj płeć (1. Mężczyzna, 2. Kobieta");
+            int genderOption = scanner.nextInt();
+
+            if (genderOption != 1 && genderOption != 2) {
+                throw new WrongOptionException("Wrong option in gender selection");
+            }
+
+            boolean isMale = false;
+
+            if (genderOption == 1) {
+                isMale = true;
+            }
+
+            guestService.editGuest(id,firstName, lastName, age, isMale);
+
+        } catch (InputMismatchException e) {
+            throw new OnlyNumberException("Use numbers when inserting ID");
+        }
+    }
+
+    private void removeGuest(Scanner scanner) {
+        System.out.println("Podaj ID gościa do usunięcia");
+        try {
+            int id = scanner.nextInt();
+            this.guestService.removeGuest(id);
+
+        } catch (InputMismatchException e) {
+            throw new OnlyNumberException("Use numbers when inserting ID");
+        }
+
     }
 
     private void showAllAddedRooms() {
@@ -163,6 +244,10 @@ public class TextUI {
         System.out.println("2. Dodaj nowy pokój");
         System.out.println("3. Pokaż listę wszystkich gości");
         System.out.println("4. Pokaż listę wsystkich dodanych pokoi");
+        System.out.println("5. Usuń gościa");
+        System.out.println("6. Edytuj dane gościa");
+        System.out.println("7. Usuń pokój");
+        System.out.println("8. Edytuj pokój");
         System.out.println("");
         System.out.println("0. Wyjście z aplikacji");
         System.out.println("");
