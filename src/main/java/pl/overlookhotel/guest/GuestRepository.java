@@ -1,5 +1,8 @@
 package pl.overlookhotel.guest;
 
+import pl.overlookhotel.exceptions.PersistenceToFileException;
+import pl.overlookhotel.util.Properties;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -18,7 +21,6 @@ public class GuestRepository {
         return newGuest;
     }
 
-
     public List<Guest> getAll() {
         return this.guests;
     }
@@ -26,10 +28,7 @@ public class GuestRepository {
     void saveAll() {
         String name = "guests.csv";
 
-        Path file = Paths.get(
-                System.getProperty("user.home"),
-                "reservation_system",
-                name);
+        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
 
         StringBuilder sb = new StringBuilder("");
 
@@ -38,23 +37,17 @@ public class GuestRepository {
         }
 
         try {
-            Path reservation_system_dir = Paths.get(System.getProperty("user.home"), "reservation_system");
-           if (!Files.isDirectory(reservation_system_dir)){
-               Files.createDirectory(reservation_system_dir);
-           }
             Files.writeString(file, sb.toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            e.printStackTrace();
+        throw new PersistenceToFileException(file.toString(), "write", "guest data");
         }
     }
 
     void readAll(){
         String name = "guests.csv";
 
-        Path file = Paths.get(
-                System.getProperty("user.home"),
-                "reservation_system",
-                name);
+        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+
         try {
             String data = Files.readString(file, StandardCharsets.UTF_8);
             String[] guestsAsString = data.split(System.getProperty("line.separator"));
@@ -67,11 +60,9 @@ public class GuestRepository {
                 Gender gender = Gender.valueOf(guestData[3]);
                 createNewGuest(firstName, lastName, age, gender);
             }
-
         } catch (IOException e) {
-            System.out.println("Nie udało się odczytać pliku z danymi");
-            e.printStackTrace();
+            throw new PersistenceToFileException(file.toString(), "read", "guests data");
         }
-
     }
+
 }

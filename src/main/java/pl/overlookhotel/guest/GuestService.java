@@ -28,4 +28,5 @@ public class GuestService {
     public void readAll() {
         this.repository.readAll();
     }
+
 }

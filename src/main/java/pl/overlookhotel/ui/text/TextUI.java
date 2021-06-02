@@ -1,11 +1,13 @@
 package pl.overlookhotel.ui.text;
 
 import pl.overlookhotel.exceptions.OnlyNumberException;
+import pl.overlookhotel.exceptions.PersistenceToFileException;
 import pl.overlookhotel.exceptions.WrongOptionException;
 import pl.overlookhotel.guest.Guest;
 import pl.overlookhotel.guest.GuestService;
 import pl.overlookhotel.room.Room;
 import pl.overlookhotel.room.RoomService;
+import pl.overlookhotel.util.Properties;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -83,10 +85,10 @@ public class TextUI {
 
     }
 
-    public void showSystemInfo(String hotelName, int systemVersion, boolean isDeveloperVersion) {
-        System.out.println("Witaj w systemie rezerwacji dla hotelu " + hotelName);
-        System.out.println("Aktualna wersja systemu " + systemVersion);
-        System.out.println("Wersja developerska " + isDeveloperVersion);
+    public void showSystemInfo() {
+        System.out.println("Witaj w systemie rezerwacji dla hotelu " + Properties.HOTEL_NAME);
+        System.out.println("Aktualna wersja systemu: " + Properties.SYSTEM_VERSION);
+        System.out.println("Wersja developerska " + Properties.IS_DEVELOPER_VERSION);
 
         System.out.println("\n ==============================\n");
     }
@@ -95,13 +97,14 @@ public class TextUI {
 
         System.out.println("Trwa ładowanie danych...");
         this.guestService.readAll();
+        this.roomService.readAll();
         System.out.println("Dane załadowane");
 
         Scanner scanner = new Scanner(System.in);
 
         try {
             performAction(scanner);
-        } catch (WrongOptionException | OnlyNumberException e) {
+        } catch (WrongOptionException | OnlyNumberException | PersistenceToFileException e) {
             System.out.println("Wystąpił niespodziewany błąd");
             System.out.println("Kod błędu: " + e.getCode());
             System.out.println("Komunikat błędu: " + e.getMessage());
@@ -124,6 +127,7 @@ public class TextUI {
                 this.guestService.saveAll();
             } else if (option == 2) {
                 readNewRoomData(scanner);
+                this.roomService.saveAll();
             } else if (option == 3) {
                 System.out.println("Aktualni goście:");
                 showAllGuests();
@@ -154,13 +158,14 @@ public class TextUI {
         }
     }
 
-
     private int getActionFromUser(Scanner scanner) {
         System.out.println("1. Dodaj nowego gościa");
         System.out.println("2. Dodaj nowy pokój");
         System.out.println("3. Pokaż listę wszystkich gości");
         System.out.println("4. Pokaż listę wsystkich dodanych pokoi");
+        System.out.println("");
         System.out.println("0. Wyjście z aplikacji");
+        System.out.println("");
         System.out.println("Wybierz opcję: ");
 
         int option;
@@ -172,6 +177,5 @@ public class TextUI {
         }
         return option;
     }
-
 
 }

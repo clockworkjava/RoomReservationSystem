@@ -1,18 +1,24 @@
 package pl.overlookhotel;
 
+import pl.overlookhotel.exceptions.PersistenceToFileException;
 import pl.overlookhotel.ui.text.TextUI;
+import pl.overlookhotel.util.Properties;
+
+import java.io.IOException;
 
 public class App {
 
     private static final TextUI textUI = new TextUI();
 
-    static final String HOTEL_NAME = "Overlook";
-    static final int SYSTEM_VERSION = 1;
-    static final boolean IS_DEVELOPER_VERSION = true;
 
     public static void main(String[] args) {
 
-        textUI.showSystemInfo(HOTEL_NAME, SYSTEM_VERSION, IS_DEVELOPER_VERSION);
+        try {
+            Properties.createDataDirectory();
+        } catch (IOException e) {
+        throw new PersistenceToFileException(Properties.DATA_DIRECTORY.toString(), "create", "directory");
+        }
+        textUI.showSystemInfo();
         textUI.showMainMenu();
     }
 }

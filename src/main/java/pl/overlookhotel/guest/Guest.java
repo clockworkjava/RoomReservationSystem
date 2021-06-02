@@ -22,7 +22,8 @@ public class Guest {
     }
 
     String toCSV() {
-        return String.format("%s,%s,%d,%s%s", this.firstName,
+        return String.format("%s,%s,%d,%s%s",
+                this.firstName,
                 this.lastName,
                 this.age,
                 this.gender,
