@@ -5,10 +5,13 @@ import pl.overlookhotel.exceptions.PersistenceToFileException;
 import pl.overlookhotel.exceptions.WrongOptionException;
 import pl.overlookhotel.guest.Guest;
 import pl.overlookhotel.guest.GuestService;
+import pl.overlookhotel.reservation.Reservation;
+import pl.overlookhotel.reservation.ReservationService;
 import pl.overlookhotel.room.Room;
 import pl.overlookhotel.room.RoomService;
 import pl.overlookhotel.util.Properties;
 
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -17,6 +20,7 @@ public class TextUI {
 
     private final GuestService guestService = new GuestService();
     private final RoomService roomService = new RoomService();
+    private final ReservationService reservationService = new ReservationService();
 
     private void readNewGuestData(Scanner scanner) {
         System.out.println("Wybrano opcję dodania nowego gościa");
@@ -98,6 +102,7 @@ public class TextUI {
         System.out.println("Trwa ładowanie danych...");
         this.guestService.readAll();
         this.roomService.readAll();
+        this.reservationService.readAll();
         System.out.println("Dane załadowane");
 
         Scanner scanner = new Scanner(System.in);
@@ -134,23 +139,50 @@ public class TextUI {
             } else if (option == 4) {
                 System.out.println("Wszystkie dodane pokoje:");
                 showAllAddedRooms();
-            } else if (option ==5){
+            } else if (option == 5) {
                 System.out.println("usuwanie gościa");
                 removeGuest(scanner);
-            } else if (option ==6){
+            } else if (option == 6) {
                 System.out.println("edycja danych gościa");
                 editGuest(scanner);
-            } else if (option ==7){
+            } else if (option == 7) {
                 System.out.println("usuwanie pokoju");
                 removeRoom(scanner);
-            } else if (option ==8){
+            } else if (option == 8) {
                 System.out.println("edycja pokoju");
                 editRoom(scanner);
+            } else if (option == 9) {
+                System.out.println("rezerwacja");
+                createReservation(scanner);
+                this.reservationService.saveAll();
             } else if (option == 0) {
                 System.out.println("Wychodzę z aplikacji");
             } else {
                 throw new WrongOptionException("Wrong option in main menu");
             }
+        }
+    }
+
+    private void createReservation(Scanner scanner) {
+        System.out.println("Od kiedy (DD.MM.YYYY): ");
+        String fromAsString = scanner.next();
+        LocalDate from = LocalDate.parse(fromAsString, Properties.DATE_FORMATTER);
+        System.out.println("Do kiedy (DD.MM.YYYY): ");
+        String toAsString = scanner.next();
+        LocalDate to = LocalDate.parse(toAsString, Properties.DATE_FORMATTER);
+        System.out.println("Podaj ID pokoju");
+        int roomId = scanner.nextInt();
+        System.out.println("Podaj ID gościa");
+        int guestId = scanner.nextInt();
+
+        try {
+
+            Reservation res = this.reservationService.createNewReservation(from, to, roomId, guestId);
+            if (res != null) {
+                System.out.println("Udało się stworzyć rezerwację");
+            }
+        } catch (IllegalArgumentException exception) {
+            System.out.println("Data zakończenia rezerwacji nie może być wcześniejsza niż data rozpoczęcia rezerwacji");
         }
     }
 
@@ -177,7 +209,6 @@ public class TextUI {
         } catch (InputMismatchException e) {
             throw new OnlyNumberException("Use numbers when inserting ID");
         }
-
     }
 
     private void editGuest(Scanner scanner) {
@@ -204,7 +235,7 @@ public class TextUI {
                 isMale = true;
             }
 
-            guestService.editGuest(id,firstName, lastName, age, isMale);
+            guestService.editGuest(id, firstName, lastName, age, isMale);
 
         } catch (InputMismatchException e) {
             throw new OnlyNumberException("Use numbers when inserting ID");
@@ -220,7 +251,6 @@ public class TextUI {
         } catch (InputMismatchException e) {
             throw new OnlyNumberException("Use numbers when inserting ID");
         }
-
     }
 
     private void showAllAddedRooms() {
@@ -248,6 +278,7 @@ public class TextUI {
         System.out.println("6. Edytuj dane gościa");
         System.out.println("7. Usuń pokój");
         System.out.println("8. Edytuj pokój");
+        System.out.println("9. Stwórz rezerwację");
         System.out.println("");
         System.out.println("0. Wyjście z aplikacji");
         System.out.println("");

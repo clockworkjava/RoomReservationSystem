@@ -56,7 +56,7 @@ public class RoomRepository {
 
         Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
 
-        if (!Files.exists(file)){
+        if (!Files.exists(file)) {
             return;
         }
 
@@ -95,7 +95,7 @@ public class RoomRepository {
         int roomToBeRemovedIndex = -1;
 
         for (int i = 0; i < this.rooms.size(); i++) {
-            if (this.rooms.get(i).getId() == id){
+            if (this.rooms.get(i).getId() == id) {
                 roomToBeRemovedIndex = i;
                 break;
             }
@@ -111,5 +111,14 @@ public class RoomRepository {
         this.remove(id);
         this.addExistingRom(id, number, bedTypes);
 
+    }
+
+    public Room getById(int id) {
+        for (Room room : this.rooms) {
+            if (room.getId() == id) {
+                return room;
+            }
+        }
+        return null;
     }
 }

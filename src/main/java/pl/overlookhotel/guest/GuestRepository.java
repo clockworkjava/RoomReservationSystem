@@ -64,6 +64,9 @@ public class GuestRepository {
 
             for (String guestAsString : guestsAsString) {
                 String[] guestData = guestAsString.split(",");
+                if (guestData[0] == null || guestData[0].trim().isEmpty()) {
+                    continue;
+                }
                 int id = Integer.parseInt(guestData[0]);
                 String firstName = guestData[1];
                 String lastName = guestData[2];
@@ -105,5 +108,14 @@ public class GuestRepository {
     public void edit(int id, String firstName, String lastName, int age, Gender gender) {
         this.remove(id);
         this.addExistingGuest(id, firstName, lastName, age, gender);
+    }
+
+    public Guest getById(int id) {
+        for (Guest guest : guests) {
+            if (guest.getId() == id) {
+                return guest;
+            }
+        }
+        return null;
     }
 }
