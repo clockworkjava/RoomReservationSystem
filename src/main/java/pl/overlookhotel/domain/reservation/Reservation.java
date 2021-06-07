@@ -1,7 +1,8 @@
-package pl.overlookhotel.reservation;
+package pl.overlookhotel.domain.reservation;
 
-import pl.overlookhotel.guest.Guest;
-import pl.overlookhotel.room.Room;
+import pl.overlookhotel.domain.guest.Guest;
+import pl.overlookhotel.domain.reservation.dto.ReservationDTO;
+import pl.overlookhotel.domain.room.Room;
 
 import java.time.LocalDateTime;
 
@@ -26,12 +27,22 @@ public class Reservation {
                 this.id,
                 this.room,
                 this.guest,
-                this.from,
-                this.to,
+                this.from.toString(),
+                this.to.toString(),
                 System.getProperty("line.separator"));
     }
 
     public int getId() {
         return this.id;
+    }
+
+    public ReservationDTO getAsDTO() {
+        return new ReservationDTO(this.id,
+                this.from,
+                this.to,
+                this.room.getId(),
+                this.room.getNumber(),
+                this.guest.getId(),
+                this.guest.getFirstName() + " " + this.guest.getLastName());
     }
 }

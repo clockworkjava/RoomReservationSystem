@@ -3,12 +3,12 @@ package pl.overlookhotel.ui.text;
 import pl.overlookhotel.exceptions.OnlyNumberException;
 import pl.overlookhotel.exceptions.PersistenceToFileException;
 import pl.overlookhotel.exceptions.WrongOptionException;
-import pl.overlookhotel.guest.Guest;
-import pl.overlookhotel.guest.GuestService;
-import pl.overlookhotel.reservation.Reservation;
-import pl.overlookhotel.reservation.ReservationService;
-import pl.overlookhotel.room.Room;
-import pl.overlookhotel.room.RoomService;
+import pl.overlookhotel.domain.guest.Guest;
+import pl.overlookhotel.domain.guest.GuestService;
+import pl.overlookhotel.domain.reservation.Reservation;
+import pl.overlookhotel.domain.reservation.ReservationService;
+import pl.overlookhotel.domain.room.Room;
+import pl.overlookhotel.domain.room.RoomService;
 import pl.overlookhotel.util.Properties;
 
 import java.time.LocalDate;

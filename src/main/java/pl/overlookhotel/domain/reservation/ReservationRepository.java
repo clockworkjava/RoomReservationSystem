@@ -1,10 +1,10 @@
-package pl.overlookhotel.reservation;
+package pl.overlookhotel.domain.reservation;
 
 import pl.overlookhotel.exceptions.PersistenceToFileException;
-import pl.overlookhotel.guest.Guest;
-import pl.overlookhotel.guest.GuestService;
-import pl.overlookhotel.room.Room;
-import pl.overlookhotel.room.RoomService;
+import pl.overlookhotel.domain.guest.Guest;
+import pl.overlookhotel.domain.guest.GuestService;
+import pl.overlookhotel.domain.room.Room;
+import pl.overlookhotel.domain.room.RoomService;
 import pl.overlookhotel.util.Properties;
 
 import java.io.IOException;
@@ -92,4 +92,7 @@ public class ReservationRepository {
         this.reservations.add(res);
     }
 
+    public List<Reservation> getAllReservations() {
+        return  this.reservations;
+    }
 }

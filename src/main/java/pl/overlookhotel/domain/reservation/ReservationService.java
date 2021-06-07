@@ -1,13 +1,16 @@
-package pl.overlookhotel.reservation;
+package pl.overlookhotel.domain.reservation;
 
-import pl.overlookhotel.guest.Guest;
-import pl.overlookhotel.guest.GuestService;
-import pl.overlookhotel.room.Room;
-import pl.overlookhotel.room.RoomService;
+import pl.overlookhotel.domain.guest.Guest;
+import pl.overlookhotel.domain.guest.GuestService;
+import pl.overlookhotel.domain.reservation.dto.ReservationDTO;
+import pl.overlookhotel.domain.room.Room;
+import pl.overlookhotel.domain.room.RoomService;
 import pl.overlookhotel.util.Properties;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReservationService {
 
@@ -37,5 +40,17 @@ public class ReservationService {
     public void saveAll() {
         this.repository.saveAll();
 
+    }
+
+    public List<ReservationDTO> getAllAsDTO(){
+        List<ReservationDTO> result = new ArrayList<>();
+
+        List<Reservation> allReservations = repository.getAllReservations();
+
+        for (Reservation reservation : allReservations){
+            ReservationDTO dto = reservation.getAsDTO();
+            result.add(dto);
+        }
+        return result;
     }
 }

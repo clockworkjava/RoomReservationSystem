@@ -1,4 +1,4 @@
-package pl.overlookhotel.room;
+package pl.overlookhotel.domain.room;
 
 import pl.overlookhotel.exceptions.PersistenceToFileException;
 import pl.overlookhotel.util.Properties;

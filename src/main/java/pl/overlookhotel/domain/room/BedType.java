@@ -1,4 +1,4 @@
-package pl.overlookhotel.room;
+package pl.overlookhotel.domain.room;
 
 public enum BedType {
     SINGLE("Pojedyńcze"),

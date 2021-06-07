@@ -1,4 +1,6 @@
-package pl.overlookhotel.guest;
+package pl.overlookhotel.domain.guest;
+
+import pl.overlookhotel.domain.guest.dto.GuestDTO;
 
 public class Guest {
 
@@ -37,5 +39,17 @@ public class Guest {
 
     public int getId() {
         return id;
+    }
+
+    public GuestDTO generateDTO() {
+        return new GuestDTO(this.id, this.firstName, this.lastName, this.age, this.gender.getDescription());
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 }

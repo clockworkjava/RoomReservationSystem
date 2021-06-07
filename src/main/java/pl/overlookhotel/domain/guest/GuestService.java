@@ -1,5 +1,8 @@
-package pl.overlookhotel.guest;
+package pl.overlookhotel.domain.guest;
 
+import pl.overlookhotel.domain.guest.dto.GuestDTO;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class GuestService {
@@ -46,6 +49,19 @@ public class GuestService {
     }
 
     public Guest getGuestById(int guestId) {
+
         return this.repository.getById(guestId);
+    }
+
+    public List<GuestDTO> getAllAsDTO() {
+        List<GuestDTO> result = new ArrayList<>();
+
+        List<Guest> allGuests = repository.getAll();
+
+        for (Guest guest : allGuests) {
+            GuestDTO dto = guest.generateDTO();
+            result.add(dto);
+        }
+        return result;
     }
 }

@@ -1,4 +1,4 @@
-package pl.overlookhotel.guest;
+package pl.overlookhotel.domain.guest;
 
 public enum Gender {
     FEMALE("Kobieta"),
