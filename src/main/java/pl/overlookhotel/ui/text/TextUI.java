@@ -1,5 +1,6 @@
 package pl.overlookhotel.ui.text;
 
+import pl.overlookhotel.domain.ObjectPool;
 import pl.overlookhotel.exceptions.OnlyNumberException;
 import pl.overlookhotel.exceptions.PersistenceToFileException;
 import pl.overlookhotel.exceptions.WrongOptionException;
@@ -18,9 +19,9 @@ import java.util.Scanner;
 
 public class TextUI {
 
-    private final GuestService guestService = new GuestService();
-    private final RoomService roomService = new RoomService();
-    private final ReservationService reservationService = new ReservationService();
+    private final GuestService guestService = ObjectPool.getGuestService();
+    private final RoomService roomService = ObjectPool.getRoomService();
+    private final ReservationService reservationService = ObjectPool.getReservationService();
 
     private void readNewGuestData(Scanner scanner) {
         System.out.println("Wybrano opcję dodania nowego gościa");

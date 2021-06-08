@@ -1,5 +1,6 @@
 package pl.overlookhotel.domain.room;
 
+import pl.overlookhotel.domain.ObjectPool;
 import pl.overlookhotel.domain.room.dto.RoomDTO;
 import pl.overlookhotel.exceptions.WrongOptionException;
 
@@ -8,7 +9,17 @@ import java.util.List;
 
 public class RoomService {
 
-    private final static RoomRepository repository = new RoomRepository();
+    private final RoomRepository repository = ObjectPool.getRoomRepository();
+
+    private final static RoomService instance = new RoomService();
+
+    private RoomService(){
+
+    }
+
+    public static RoomService getInstance() {
+        return instance;
+    }
 
     public Room createNewRoom(int number, int[] bedTypesOptions) {
 

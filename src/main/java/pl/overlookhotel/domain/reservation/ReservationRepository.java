@@ -1,5 +1,6 @@
 package pl.overlookhotel.domain.reservation;
 
+import pl.overlookhotel.domain.ObjectPool;
 import pl.overlookhotel.exceptions.PersistenceToFileException;
 import pl.overlookhotel.domain.guest.Guest;
 import pl.overlookhotel.domain.guest.GuestService;
@@ -19,8 +20,18 @@ import java.util.List;
 public class ReservationRepository {
 
     List<Reservation> reservations = new ArrayList<>();
-    RoomService roomService = new RoomService();
-    GuestService guestService = new GuestService();
+    RoomService roomService = ObjectPool.getRoomService();
+    GuestService guestService = ObjectPool.getGuestService();
+
+    private static final ReservationRepository instance = new ReservationRepository();
+
+    private ReservationRepository(){
+
+    }
+
+    public static ReservationRepository getInstance() {
+        return instance;
+    }
 
     public Reservation createNewReservation(Room room, Guest guest, LocalDateTime from, LocalDateTime to) {
         Reservation res = new Reservation(findNewId(), room, guest, from, to);

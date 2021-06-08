@@ -5,13 +5,14 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import pl.overlookhotel.domain.ObjectPool;
 import pl.overlookhotel.domain.room.RoomService;
 import pl.overlookhotel.domain.room.dto.RoomDTO;
 
 public class RoomsTab {
 
     private Tab roomTab;
-    private RoomService roomService = new RoomService();
+    private RoomService roomService = ObjectPool.getRoomService();
 
     public RoomsTab() {
         TableView<RoomDTO> tableView = new TableView<>();
@@ -22,7 +23,10 @@ public class RoomsTab {
         TableColumn<RoomDTO, String> bedsColumn = new TableColumn<>("Typy łożek");
         bedsColumn.setCellValueFactory(new PropertyValueFactory<>("beds"));
 
-        tableView.getColumns().addAll(numberColumn, bedsColumn);
+        TableColumn<RoomDTO, String> bedsCountColumn = new TableColumn<>("Ilość łóżek w pokoju");
+        bedsCountColumn.setCellValueFactory(new PropertyValueFactory<>("bedsCount"));
+
+        tableView.getColumns().addAll(numberColumn, bedsColumn, bedsCountColumn);
 
         List<RoomDTO> allAsDTO = roomService.getAllAsDTO();
 

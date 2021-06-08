@@ -1,5 +1,6 @@
 package pl.overlookhotel.domain.guest;
 
+import pl.overlookhotel.domain.ObjectPool;
 import pl.overlookhotel.domain.guest.dto.GuestDTO;
 
 import java.util.ArrayList;
@@ -7,7 +8,17 @@ import java.util.List;
 
 public class GuestService {
 
-    private final static GuestRepository repository = new GuestRepository();
+    private final  GuestRepository repository = ObjectPool.getGuestRepository();
+
+    private final static GuestService instance = new GuestService();
+
+    private GuestService()   {
+
+    }
+
+    public static GuestService getInstance() {
+        return instance;
+    }
 
     public Guest createNewGuest(String firstName, String lastName, int age, boolean isMale) {
 
