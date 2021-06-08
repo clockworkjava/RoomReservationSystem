@@ -1,15 +1,16 @@
 package pl.overlookhotel.ui.gui;
 
 import javafx.scene.control.TabPane;
+import javafx.stage.Stage;
 
 public class MainTabView {
 
     private TabPane mainTabs;
 
-    public MainTabView() {
+    public MainTabView(Stage primaryStage) {
         this.mainTabs = new TabPane();
 
-        RoomsTab roomsTab = new RoomsTab();
+        RoomsTab roomsTab = new RoomsTab(primaryStage);
         GuestsTab guestsTab = new GuestsTab();
         ReservationsTab reservationsTab = new ReservationsTab();
 

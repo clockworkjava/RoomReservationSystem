@@ -19,6 +19,10 @@ public class Properties {
     public static final int HOTEL_NIGHT_END_HOUR = 10;
     public static final int HOTEL_NIGHT_END_MINUTE = 0;
 
+    public static final String SINGLE_BED = "Pojedyńcze";
+    public static final String DOUBLE_BED = "Podwójne";
+    public static final String KING_SIZE_BED = "Królewskie";
+
     static final public Path DATA_DIRECTORY = Paths.get(
             System.getProperty("user.home"),
             "reservation_system");
