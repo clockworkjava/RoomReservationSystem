@@ -64,7 +64,7 @@ public class GuestService {
         return this.repository.getById(guestId);
     }
 
-    public List<GuestDTO> getAllAsDTO() {
+    public List<GuestDTO> getAllGuestsAsDTO() {
         List<GuestDTO> result = new ArrayList<>();
 
         List<Guest> allGuests = repository.getAll();

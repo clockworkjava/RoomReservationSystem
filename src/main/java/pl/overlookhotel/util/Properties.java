@@ -23,6 +23,9 @@ public class Properties {
     public static final String DOUBLE_BED = "Podwójne";
     public static final String KING_SIZE_BED = "Królewskie";
 
+    public static final String FEMALE = "Kobieta";
+    public static final String MALE = "Mężczyzna";
+
     static final public Path DATA_DIRECTORY = Paths.get(
             System.getProperty("user.home"),
             "reservation_system");

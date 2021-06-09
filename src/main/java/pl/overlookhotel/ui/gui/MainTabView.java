@@ -11,7 +11,7 @@ public class MainTabView {
         this.mainTabs = new TabPane();
 
         RoomsTab roomsTab = new RoomsTab(primaryStage);
-        GuestsTab guestsTab = new GuestsTab();
+        GuestsTab guestsTab = new GuestsTab(primaryStage);
         ReservationsTab reservationsTab = new ReservationsTab();
 
         this.mainTabs.getTabs().addAll(reservationsTab.getReservationTab(), guestsTab.getGuestTab(), roomsTab.getRoomTab());
