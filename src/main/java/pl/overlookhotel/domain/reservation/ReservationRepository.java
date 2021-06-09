@@ -81,7 +81,7 @@ public class ReservationRepository {
             String[] reservationsAsString = data.split(System.getProperty("line.separator"));
 
             for (String reservationAsString : reservationsAsString) {
-                String[] reservationData = reservationAsString.split("");
+                String[] reservationData = reservationAsString.split(",");
                 if (reservationData[0] == null || reservationData[0].trim().isEmpty()) {
                     continue;
                 }

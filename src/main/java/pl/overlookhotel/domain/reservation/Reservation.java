@@ -25,8 +25,8 @@ public class Reservation {
     String toCSV() {
         return String.format("%s,%s,%s,%s,%s%s",
                 this.id,
-                this.room,
-                this.guest,
+                this.room.getId(),
+                this.guest.getId(),
                 this.from.toString(),
                 this.to.toString(),
                 System.getProperty("line.separator"));
