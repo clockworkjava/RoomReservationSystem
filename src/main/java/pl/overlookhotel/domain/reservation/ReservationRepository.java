@@ -25,7 +25,7 @@ public class ReservationRepository {
 
     private static final ReservationRepository instance = new ReservationRepository();
 
-    private ReservationRepository(){
+    private ReservationRepository() {
 
     }
 
@@ -104,6 +104,22 @@ public class ReservationRepository {
     }
 
     public List<Reservation> getAllReservations() {
-        return  this.reservations;
+        return this.reservations;
     }
+
+    public void remove(int id) {
+        int reservationToBeRemovedIndex = -1;
+
+        for (int i = 0; i < this.reservations.size(); i++) {
+            if (this.reservations.get(i).getId() == id) {
+                reservationToBeRemovedIndex = i;
+                break;
+            }
+        }
+        if (reservationToBeRemovedIndex > -1) {
+            this.reservations.remove(reservationToBeRemovedIndex);
+        }
+    }
+
+
 }

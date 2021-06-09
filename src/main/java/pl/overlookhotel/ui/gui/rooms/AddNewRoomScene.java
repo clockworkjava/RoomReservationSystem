@@ -1,4 +1,4 @@
-package pl.overlookhotel.ui.gui;
+package pl.overlookhotel.ui.gui.rooms;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

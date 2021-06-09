@@ -1,4 +1,4 @@
-package pl.overlookhotel.ui.gui;
+package pl.overlookhotel.ui.gui.reservations;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,6 +12,7 @@ import pl.overlookhotel.domain.reservation.ReservationService;
 import pl.overlookhotel.domain.reservation.dto.ReservationDTO;
 import pl.overlookhotel.domain.room.RoomService;
 import pl.overlookhotel.domain.room.dto.RoomDTO;
+import pl.overlookhotel.ui.gui.guests.GuestSelectionItem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

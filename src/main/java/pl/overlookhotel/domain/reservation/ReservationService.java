@@ -53,6 +53,10 @@ public class ReservationService {
 
     }
 
+    public void removeReservation(int id){
+        this.repository.remove(id);
+    }
+
     public List<ReservationDTO> getAllReservationsAsDTO(){
         List<ReservationDTO> result = new ArrayList<>();
 

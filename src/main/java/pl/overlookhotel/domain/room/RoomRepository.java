@@ -109,13 +109,12 @@ public class RoomRepository {
                 roomToBeRemovedIndex = i;
                 break;
             }
+        }
 
             if (roomToBeRemovedIndex > -1) {
                 this.rooms.remove(roomToBeRemovedIndex);
             }
         }
-    }
-
 
     public void edit(int id, int number, BedType[] bedTypes) {
         this.remove(id);

@@ -1,9 +1,7 @@
-package pl.overlookhotel.ui.gui;
+package pl.overlookhotel.ui.gui.rooms;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -52,7 +50,31 @@ public class RoomsTab {
         TableColumn<RoomDTO, String> bedsCountColumn = new TableColumn<>("Ilość łóżek w pokoju");
         bedsCountColumn.setCellValueFactory(new PropertyValueFactory<>("bedsCount"));
 
-        tableView.getColumns().addAll(numberColumn, bedsColumn, bedsCountColumn);
+        TableColumn<RoomDTO, RoomDTO> deleteColumn = new TableColumn<>("Usuń pokój");
+        deleteColumn.setCellValueFactory(value -> new ReadOnlyObjectWrapper(value.getValue()));
+
+        deleteColumn.setCellFactory(param -> new TableCell<>() {
+
+            Button deleteButton = new Button("Usuń");
+
+            @Override
+            protected void updateItem(RoomDTO value, boolean empty) {
+                super.updateItem(value, empty);
+
+                if (value == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(deleteButton);
+                    deleteButton.setOnAction(actionEvent -> {
+                        roomService.removeRoom(value.getId());
+                        tableView.getItems().remove(value);
+                    });
+                }
+            }
+
+        });
+
+        tableView.getColumns().addAll(numberColumn, bedsColumn, bedsCountColumn, deleteColumn);
 
         List<RoomDTO> allAsDTO = roomService.getAllAsDTO();
 
@@ -60,7 +82,7 @@ public class RoomsTab {
         return tableView;
     }
 
-    Tab getRoomTab() {
+    public Tab getRoomTab() {
         return roomTab;
     }
 }

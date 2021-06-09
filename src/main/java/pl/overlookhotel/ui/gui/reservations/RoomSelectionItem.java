@@ -1,4 +1,4 @@
-package pl.overlookhotel.ui.gui;
+package pl.overlookhotel.ui.gui.reservations;
 
 public class RoomSelectionItem {
 

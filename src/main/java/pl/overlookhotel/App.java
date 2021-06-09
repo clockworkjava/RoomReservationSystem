@@ -47,9 +47,9 @@ public class App extends Application {
 
     @Override
     public void stop() {
-        System.out.println("Dane zapisane");
         guestService.saveAll();
         roomService.saveAll();
         reservationService.saveAll();
+        System.out.println("Dane zapisane");
     }
 }

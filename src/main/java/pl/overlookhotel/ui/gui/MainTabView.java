@@ -2,6 +2,9 @@ package pl.overlookhotel.ui.gui;
 
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import pl.overlookhotel.ui.gui.guests.GuestsTab;
+import pl.overlookhotel.ui.gui.reservations.ReservationsTab;
+import pl.overlookhotel.ui.gui.rooms.RoomsTab;
 
 public class MainTabView {
 

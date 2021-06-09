@@ -1,14 +1,13 @@
-package pl.overlookhotel.ui.gui;
+package pl.overlookhotel.ui.gui.guests;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.overlookhotel.domain.ObjectPool;
+import pl.overlookhotel.domain.guest.Guest;
 import pl.overlookhotel.domain.guest.GuestService;
 import pl.overlookhotel.domain.guest.dto.GuestDTO;
 
@@ -53,7 +52,32 @@ public class GuestsTab {
         TableColumn<GuestDTO, String> genderColumn = new TableColumn<>("płeć");
         genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
 
-        tableView.getColumns().addAll(firstNameColumn, lastNameColumn, ageColumn, genderColumn);
+        TableColumn<GuestDTO, GuestDTO> deleteColumn = new TableColumn<>("Usuń gościa");
+        deleteColumn.setCellValueFactory(value -> new ReadOnlyObjectWrapper(value.getValue()));
+
+        deleteColumn.setCellFactory(param -> new TableCell<>() {
+
+            Button deleteButton = new Button("Usuń");
+
+            @Override
+            protected void updateItem(GuestDTO value, boolean empty) {
+                super.updateItem(value, empty);
+
+                if (value == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(deleteButton);
+                    deleteButton.setOnAction(actionEvent -> {
+                        guestService.removeGuest(value.getId());
+                        tableView.getItems().remove(value);
+                    });
+                }
+
+            }
+        });
+
+
+        tableView.getColumns().addAll(firstNameColumn, lastNameColumn, ageColumn, genderColumn, deleteColumn);
 
         tableView.getItems().addAll(guestService.getAllGuestsAsDTO());
         return tableView;
