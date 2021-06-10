@@ -1,8 +1,10 @@
 package pl.overlookhotel.domain.guest;
 
+import pl.overlookhotel.util.Properties;
+
 public enum Gender {
-    FEMALE("Kobieta"),
-    MALE("Mężczyzna");
+    FEMALE(Properties.FEMALE),
+    MALE(Properties.MALE);
 
     private final String description;
 
@@ -12,5 +14,10 @@ public enum Gender {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public String toString() {
+        return this.description;
     }
 }

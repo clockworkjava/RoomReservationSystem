@@ -17,7 +17,7 @@ public class GuestRepository {
 
     private static final GuestRepository instance = new GuestRepository();
 
-    private GuestRepository(){
+    private GuestRepository() {
 
     }
 
@@ -78,12 +78,16 @@ public class GuestRepository {
                     continue;
                 }
                 int id = Integer.parseInt(guestData[0]);
-                String firstName = guestData[1];
-                String lastName = guestData[2];
                 int age = Integer.parseInt(guestData[3]);
-                Gender gender = Gender.valueOf(guestData[4]);
-                addExistingGuest(id, firstName, lastName, age, gender);
+
+                Gender gender = Gender.FEMALE;
+                if (guestData[4].equals(Properties.MALE)) {
+                    gender = Gender.MALE;
+                }
+
+                addExistingGuest(id, guestData[1], guestData[2], age, gender);
             }
+
         } catch (IOException e) {
             throw new PersistenceToFileException(file.toString(), "read", "guests data");
         }

@@ -32,7 +32,7 @@ public class RoomRepository {
         return newRoom;
     }
 
-    Room addExistingRom(int id, int number, BedType[] bedTypes) {
+    Room addExistingRoom(int id, int number, BedType[] bedTypes) {
         Room newRoom = new Room(id, number, bedTypes);
         rooms.add(newRoom);
 
@@ -91,7 +91,7 @@ public class RoomRepository {
                         bedTypes[i] = BedType.KING_SIZE;
                     }
                 }
-                addExistingRom(id, number, bedTypes);
+                addExistingRoom(id, number, bedTypes);
             }
         } catch (IOException e) {
             throw new PersistenceToFileException(file.toString(), "read", "room data");
@@ -125,7 +125,7 @@ public class RoomRepository {
 
     public void edit(int id, int number, BedType[] bedTypes) {
         this.remove(id);
-        this.addExistingRom(id, number, bedTypes);
+        this.addExistingRoom(id, number, bedTypes);
 
     }
 
