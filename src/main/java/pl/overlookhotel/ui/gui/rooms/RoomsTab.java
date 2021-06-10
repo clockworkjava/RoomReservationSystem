@@ -3,6 +3,7 @@ package pl.overlookhotel.ui.gui.rooms;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,18 +17,20 @@ public class RoomsTab {
 
     private Tab roomTab;
     private RoomService roomService = ObjectPool.getRoomService();
+    private VBox layout;
+    private Stage primaryStage;
 
     public RoomsTab(Stage primaryStage) {
         TableView<RoomDTO> tableView = getRoomDTOTableView();
-
+        this.primaryStage = primaryStage;
         Button button = new Button("Stwórz nowy pokój");
 
         button.setOnAction(actionEvent -> {
             Stage stg = new Stage();
             stg.initModality(Modality.WINDOW_MODAL);
-            stg.initOwner(primaryStage);
+            stg.initOwner(this.primaryStage);
             stg.setScene(new AddNewRoomScene(stg, tableView).getMainScene());
-            stg.setTitle("Dodawanie nowego pokoju");
+            stg.setTitle("Dodaj nowy pokój");
 
             stg.showAndWait();
         });
@@ -50,12 +53,14 @@ public class RoomsTab {
         TableColumn<RoomDTO, String> bedsCountColumn = new TableColumn<>("Ilość łóżek w pokoju");
         bedsCountColumn.setCellValueFactory(new PropertyValueFactory<>("bedsCount"));
 
-        TableColumn<RoomDTO, RoomDTO> deleteColumn = new TableColumn<>("Usuń pokój");
+        TableColumn<RoomDTO, RoomDTO> deleteColumn = new TableColumn<>("Operacje");
         deleteColumn.setCellValueFactory(value -> new ReadOnlyObjectWrapper(value.getValue()));
 
         deleteColumn.setCellFactory(param -> new TableCell<>() {
 
             Button deleteButton = new Button("Usuń");
+            Button editButton = new Button("Edytuj");
+            HBox hBox = new HBox(deleteButton,editButton);
 
             @Override
             protected void updateItem(RoomDTO value, boolean empty) {
@@ -64,10 +69,19 @@ public class RoomsTab {
                 if (value == null) {
                     setGraphic(null);
                 } else {
-                    setGraphic(deleteButton);
+                    setGraphic(hBox);
                     deleteButton.setOnAction(actionEvent -> {
                         roomService.removeRoom(value.getId());
                         tableView.getItems().remove(value);
+                    });
+                    editButton.setOnAction(actionEvent -> {
+                        Stage stg = new Stage();
+                        stg.initModality(Modality.WINDOW_MODAL);
+                        stg.initOwner(primaryStage);
+                        stg.setScene(new EditRoomScene(stg, tableView, value).getMainScene());
+                        stg.setTitle("Dodaj nowy pokój");
+
+                        stg.showAndWait();
                     });
                 }
             }
