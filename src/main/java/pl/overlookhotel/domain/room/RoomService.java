@@ -102,7 +102,7 @@ public class RoomService {
         this.repository.remove(id);
     }
 
-    public Room getRoomById(int roomId) {
+    public Room getRoomById(long roomId) {
         return this.repository.getById(roomId);
     }
 

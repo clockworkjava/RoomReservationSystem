@@ -1,5 +1,7 @@
 package pl.overlookhotel.util;
 
+import pl.overlookhotel.domain.guest.Gender;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -61,6 +63,8 @@ public class SystemUtils {
             Statement statement = connection.createStatement();
             statement.execute("CREATE TABLE IF NOT EXISTS ROOMS(ID INT PRIMARY KEY AUTO_INCREMENT, ROOM_NUMBER INT NOT NULL UNIQUE)");
             statement.execute("CREATE TABLE IF NOT EXISTS BEDS(ID INT PRIMARY KEY AUTO_INCREMENT, ROOM_ID INT NOT NULL, BED VARCHAR2(55), FOREIGN KEY (ROOM_ID) REFERENCES ROOMS(ID))");
+            statement.execute("CREATE TABLE IF NOT EXISTS GUESTS(ID INT PRIMARY KEY AUTO_INCREMENT, FIRST_NAME VARCHAR2(100) NOT NULL, LAST_NAME VARCHAR2(100) NOT NULL, AGE NUMBER NOT NULL, GENDER VARCHAR2(25) NOT NULL)");
+            statement.execute("CREATE TABLE IF NOT EXISTS RESERVATIONS(ID INT PRIMARY KEY AUTO_INCREMENT, ROOM_ID INT NOT NULL, GUEST_ID INT NOT NULL, RES_FROM SMALLDATETIME NOT NULL, RES_TO SMALLDATETIME NOT NULL, FOREIGN KEY (ROOM_ID) REFERENCES ROOMS(ID), FOREIGN KEY (GUEST_ID) REFERENCES GUESTS(ID))");
             System.out.println("Udalo się nawiazac polaczenie z baza danych");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Blad przy tworzeniu polaczenia z baza danych " + e.getMessage());

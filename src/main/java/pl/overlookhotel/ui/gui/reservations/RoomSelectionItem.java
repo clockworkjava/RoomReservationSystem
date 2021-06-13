@@ -3,7 +3,7 @@ package pl.overlookhotel.ui.gui.reservations;
 public class RoomSelectionItem {
 
     private int number;
-    private int id;
+    private long id;
 
     public RoomSelectionItem(int number, int id) {
         this.number = number;
@@ -14,7 +14,7 @@ public class RoomSelectionItem {
         return number;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
