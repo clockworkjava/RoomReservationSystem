@@ -6,7 +6,7 @@ import pl.overlookhotel.domain.guest.Guest;
 import pl.overlookhotel.domain.guest.GuestService;
 import pl.overlookhotel.domain.room.Room;
 import pl.overlookhotel.domain.room.RoomService;
-import pl.overlookhotel.util.Properties;
+import pl.overlookhotel.util.SystemUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -52,7 +52,7 @@ public class ReservationRepository {
     void saveAll() {
         String name = "reservations.csv";
 
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
 
         StringBuilder sb = new StringBuilder("");
 
@@ -70,7 +70,7 @@ public class ReservationRepository {
     void readAll() {
         String name = "reservations.csv";
 
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
 
         if (!Files.exists(file)) {
             return;

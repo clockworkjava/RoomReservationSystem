@@ -1,7 +1,7 @@
 package pl.overlookhotel.domain.guest;
 
 import pl.overlookhotel.exceptions.PersistenceToFileException;
-import pl.overlookhotel.util.Properties;
+import pl.overlookhotel.util.SystemUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -44,7 +44,7 @@ public class GuestRepository {
     void saveAll() {
         String name = "guests.csv";
 
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
 
         StringBuilder sb = new StringBuilder("");
 
@@ -62,7 +62,7 @@ public class GuestRepository {
     void readAll() {
         String name = "guests.csv";
 
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
 
         if (!Files.exists(file)) {
             return;
@@ -81,7 +81,7 @@ public class GuestRepository {
                 int age = Integer.parseInt(guestData[3]);
 
                 Gender gender = Gender.FEMALE;
-                if (guestData[4].equals(Properties.MALE)) {
+                if (guestData[4].equals(SystemUtils.MALE)) {
                     gender = Gender.MALE;
                 }
 

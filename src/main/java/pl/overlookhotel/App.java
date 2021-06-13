@@ -9,7 +9,7 @@ import pl.overlookhotel.domain.room.RoomService;
 import pl.overlookhotel.exceptions.PersistenceToFileException;
 import pl.overlookhotel.ui.gui.PrimaryStage;
 import pl.overlookhotel.ui.text.TextUI;
-import pl.overlookhotel.util.Properties;
+import pl.overlookhotel.util.SystemUtils;
 
 import java.io.IOException;
 
@@ -24,15 +24,16 @@ public class App extends Application {
     public static void main(String[] args) {
 
         try {
-            Properties.createDataDirectory();
-
+            SystemUtils systemUtils = new SystemUtils();
+            SystemUtils.createDataDirectory();
+            systemUtils.createDatabaseConnection();
             System.out.println("Trwa ładowanie danych...");
             guestService.readAll();
             roomService.readAll();
             reservationService.readAll();
             System.out.println("Dane załadowane");
         } catch (IOException e) {
-            throw new PersistenceToFileException(Properties.DATA_DIRECTORY.toString(), "create", "directory");
+            throw new PersistenceToFileException(SystemUtils.DATA_DIRECTORY.toString(), "create", "directory");
         }
         Application.launch(args);
 //        textUI.showSystemInfo();

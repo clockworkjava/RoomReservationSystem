@@ -2,13 +2,16 @@ package pl.overlookhotel.domain.room;
 
 import pl.overlookhotel.domain.room.dto.RoomDTO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Room {
 
-    private final int id;
-    private final int number;
-    private final BedType[] beds;
+    private final long id;
+    private  int number;
+    private  List<BedType> beds;
 
-    Room(int id, int number, BedType[] bedTypes) {
+    Room(long id, int number, List<BedType> bedTypes) {
         this.id = id;
         this.number = number;
         this.beds = bedTypes;
@@ -26,23 +29,24 @@ public class Room {
 
     String toCSV() {
 
-        String[] bedsAsString = getBedsAsString();
+        List<String> bedsAsString = getBedsAsString();
 
         String bedTypes = String.join("#", bedsAsString);
 
         return String.format("%d,%d,%s%s", this.id, this.number, bedTypes, System.getProperty("line.separator"));
     }
 
-    private String[] getBedsAsString() {
-        String[] bedsAsString = new String[this.beds.length];
+    private List<String> getBedsAsString() {
 
-        for (int i = 0; i < this.beds.length; i++) {
-            bedsAsString[i] = this.beds[i].toString();
+        List<String> bedsAsString = new ArrayList<>();
+
+        for (int i = 0; i < this.beds.size(); i++) {
+            bedsAsString.add(this.beds.get(i).toString());
         }
         return bedsAsString;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -51,11 +55,23 @@ public class Room {
     }
 
     public RoomDTO generateDTO() {
-        String[] bedsAsString = getBedsAsString();
+
+        List<String> bedsAsString = getBedsAsString();
 
         String bedTypes = String.join(",", bedsAsString);
 
-    return new RoomDTO(this.id, this.number, bedTypes, beds.length);
+    return new RoomDTO(this.id, this.number, bedTypes, beds.size());
     }
 
+    void addBed(BedType bedType) {
+    this.beds.add(bedType);
+    }
+
+    void setNumber(int number) {
+    this.number = number;
+    }
+
+    public void setBeds(List<BedType> bedTypes) {
+    this.beds = bedTypes;
+    }
 }

@@ -1,10 +1,10 @@
 package pl.overlookhotel.domain.guest;
 
-import pl.overlookhotel.util.Properties;
+import pl.overlookhotel.util.SystemUtils;
 
 public enum Gender {
-    FEMALE(Properties.FEMALE),
-    MALE(Properties.MALE);
+    FEMALE(SystemUtils.FEMALE),
+    MALE(SystemUtils.MALE);
 
     private final String description;
 

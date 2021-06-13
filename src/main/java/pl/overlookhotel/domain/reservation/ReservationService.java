@@ -6,7 +6,7 @@ import pl.overlookhotel.domain.guest.GuestService;
 import pl.overlookhotel.domain.reservation.dto.ReservationDTO;
 import pl.overlookhotel.domain.room.Room;
 import pl.overlookhotel.domain.room.RoomService;
-import pl.overlookhotel.util.Properties;
+import pl.overlookhotel.util.SystemUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,8 +34,8 @@ public class ReservationService {
         Room room = this.roomService.getRoomById(roomId);
         Guest guest = this.guestService.getGuestById(guestId);
 
-        LocalDateTime fromWithTime = from.atTime(Properties.HOTEL_NIGHT_START_HOUR, Properties.HOTEL_NIGHT_START_MINUTE);
-        LocalDateTime toWithTime = to.atTime(Properties.HOTEL_NIGHT_END_HOUR, Properties.HOTEL_NIGHT_END_MINUTE);
+        LocalDateTime fromWithTime = from.atTime(SystemUtils.HOTEL_NIGHT_START_HOUR, SystemUtils.HOTEL_NIGHT_START_MINUTE);
+        LocalDateTime toWithTime = to.atTime(SystemUtils.HOTEL_NIGHT_END_HOUR, SystemUtils.HOTEL_NIGHT_END_MINUTE);
 
         if (toWithTime.isBefore(fromWithTime)) {
             throw new IllegalArgumentException();

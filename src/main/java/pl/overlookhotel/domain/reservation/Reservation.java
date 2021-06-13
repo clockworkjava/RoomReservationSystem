@@ -37,10 +37,9 @@ public class Reservation {
     }
 
     public ReservationDTO getAsDTO() {
-        return new ReservationDTO(this.id,
-                this.from,
+        return new ReservationDTO(this.id, this.from,
                 this.to,
-                this.room.getId(),
+                (int)this.room.getId(),
                 this.room.getNumber(),
                 this.guest.getId(),
                 this.guest.getFirstName() + " " + this.guest.getLastName());

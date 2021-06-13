@@ -49,7 +49,7 @@ public class AddNewReservationScene {
         List<RoomSelectionItem> roomSelectionItems = new ArrayList<>();
 
         allAsDTO.forEach(dto -> {
-            roomSelectionItems.add(new RoomSelectionItem(dto.getNumber(), dto.getId()));
+            roomSelectionItems.add(new RoomSelectionItem(dto.getNumber(), (int)dto.getId()));
         });
 
         List<GuestSelectionItem> guestSelectionItems = new ArrayList<>();

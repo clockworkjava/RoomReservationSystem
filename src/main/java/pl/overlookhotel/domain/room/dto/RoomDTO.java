@@ -2,19 +2,19 @@ package pl.overlookhotel.domain.room.dto;
 
 public class RoomDTO {
 
-    private int id;
+    private long id;
     private int number;
     private String beds;
     private int bedsCount;
 
-    public RoomDTO(int id, int number, String beds, int bedsCount) {
+    public RoomDTO(long id, int number, String beds, int bedsCount) {
         this.id = id;
         this.number = number;
         this.beds = beds;
         this.bedsCount = bedsCount;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

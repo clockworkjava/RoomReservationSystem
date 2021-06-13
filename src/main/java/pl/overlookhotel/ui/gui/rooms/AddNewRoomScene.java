@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import pl.overlookhotel.domain.ObjectPool;
 import pl.overlookhotel.domain.room.RoomService;
 import pl.overlookhotel.domain.room.dto.RoomDTO;
-import pl.overlookhotel.util.Properties;
+import pl.overlookhotel.util.SystemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,10 +90,10 @@ public class AddNewRoomScene {
     private ComboBox<String> getComboBox() {
         ComboBox<String> bedTypeField = new ComboBox<>();
         bedTypeField.getItems().addAll(
-                Properties.SINGLE_BED,
-                Properties.DOUBLE_BED,
-                Properties.KING_SIZE_BED);
-        bedTypeField.setValue(Properties.SINGLE_BED);
+                SystemUtils.SINGLE_BED,
+                SystemUtils.DOUBLE_BED,
+                SystemUtils.KING_SIZE_BED);
+        bedTypeField.setValue(SystemUtils.SINGLE_BED);
         this.comboBoxes.add(bedTypeField);
         return bedTypeField;
     }

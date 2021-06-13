@@ -4,6 +4,7 @@ import pl.overlookhotel.domain.guest.GuestRepository;
 import pl.overlookhotel.domain.guest.GuestService;
 import pl.overlookhotel.domain.reservation.ReservationRepository;
 import pl.overlookhotel.domain.reservation.ReservationService;
+import pl.overlookhotel.domain.room.RoomDatabaseRepository;
 import pl.overlookhotel.domain.room.RoomRepository;
 import pl.overlookhotel.domain.room.RoomService;
 
@@ -26,7 +27,8 @@ public class ObjectPool {
     }
 
     public static RoomRepository getRoomRepository() {
-        return RoomRepository.getInstance();
+//        return RoomFileRepository.getInstance();
+        return RoomDatabaseRepository.getInstance();
     }
 
     public static ReservationService getReservationService() {

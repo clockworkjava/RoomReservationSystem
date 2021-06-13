@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import pl.overlookhotel.domain.ObjectPool;
 import pl.overlookhotel.domain.guest.GuestService;
 import pl.overlookhotel.domain.guest.dto.GuestDTO;
-import pl.overlookhotel.util.Properties;
+import pl.overlookhotel.util.SystemUtils;
 
 public class AddNewGuestScene {
 
@@ -59,8 +59,8 @@ public class AddNewGuestScene {
 
         Label guestGenderLabel = new Label("Płeć");
         ComboBox<String> guestGenderField = new ComboBox<>();
-        guestGenderField.getItems().addAll(Properties.FEMALE, Properties.MALE);
-        guestGenderField.setValue(Properties.FEMALE);
+        guestGenderField.getItems().addAll(SystemUtils.FEMALE, SystemUtils.MALE);
+        guestGenderField.setValue(SystemUtils.FEMALE);
 
         gridPane.add(guestGenderLabel, 0, 3);
         gridPane.add(guestGenderField, 1, 3);
@@ -79,7 +79,7 @@ public class AddNewGuestScene {
 
             boolean isMale = false;
 
-            if (gender.equals(Properties.MALE)) {
+            if (gender.equals(SystemUtils.MALE)) {
                 isMale = true;
             }
 
