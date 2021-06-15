@@ -4,7 +4,6 @@ import pl.overlookhotel.domain.guest.GuestDatabaseRepository;
 import pl.overlookhotel.domain.guest.GuestRepository;
 import pl.overlookhotel.domain.guest.GuestService;
 import pl.overlookhotel.domain.reservation.ReservationDatabaseRepository;
-import pl.overlookhotel.domain.reservation.ReservationFileRepository;
 import pl.overlookhotel.domain.reservation.ReservationRepository;
 import pl.overlookhotel.domain.reservation.ReservationService;
 import pl.overlookhotel.domain.room.RoomDatabaseRepository;
@@ -13,6 +12,9 @@ import pl.overlookhotel.domain.room.RoomService;
 
 public class ObjectPool {
 
+    private static final RoomService roomService = new RoomService();
+    private static final ReservationService reservationService = new ReservationService();
+
     private ObjectPool() {
 
     }
@@ -20,12 +22,14 @@ public class ObjectPool {
     public static GuestService getGuestService() {
         return GuestService.getInstance();
     }
+
     public static GuestRepository getGuestRepository() {
         return GuestDatabaseRepository.getInstance();
     }
 
     public static RoomService getRoomService() {
-        return RoomService.getInstance();
+
+        return roomService;
     }
 
     public static RoomRepository getRoomRepository() {
@@ -34,7 +38,8 @@ public class ObjectPool {
     }
 
     public static ReservationService getReservationService() {
-        return ReservationService.getInstance();
+
+        return reservationService;
     }
 
     public static ReservationRepository getReservationRepository() {

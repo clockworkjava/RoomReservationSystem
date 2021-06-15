@@ -1,20 +1,24 @@
 package pl.overlookhotel.domain.room;
 
 import pl.overlookhotel.domain.ObjectPool;
+import pl.overlookhotel.domain.reservation.Reservation;
+import pl.overlookhotel.domain.reservation.ReservationService;
 import pl.overlookhotel.domain.room.dto.RoomDTO;
 import pl.overlookhotel.exceptions.WrongOptionException;
 import pl.overlookhotel.util.SystemUtils;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class RoomService {
 
-    private final RoomRepository repository = ObjectPool.getRoomRepository();
-    private final static RoomService instance = new RoomService();
+    private RoomRepository repository = ObjectPool.getRoomRepository();
+    private ReservationService reservationService = ObjectPool.getReservationService();
 
-    private RoomService() {
+    public RoomService() {
     }
 
     public Room createNewRoom(int number, List<String> bedTypesAsString) {
@@ -29,7 +33,7 @@ public class RoomService {
         return repository.createNewRoom(number, bedTypes);
     }
 
-    private List<BedType> getBedTypes(int[] bedTypesOptions) {
+    List<BedType> getBedTypes(int[] bedTypesOptions) {
         BedType[] bedTypes = new BedType[bedTypesOptions.length];
 
         for (int i = 0; i < bedTypesOptions.length; i = i + 1) {
@@ -69,7 +73,7 @@ public class RoomService {
         this.repository.edit(id, number, bedTypes);
     }
 
-    private List<BedType> getBedTypes(List<String> bedTypesAsString) {
+    List<BedType> getBedTypes(List<String> bedTypesAsString) {
         BedType[] bedTypes = new BedType[bedTypesAsString.size()];
 
         for (int i = 0; i < bedTypesAsString.size(); i = i + 1) {
@@ -120,8 +124,61 @@ public class RoomService {
         return result;
     }
 
-    public static RoomService getInstance() {
-        return instance;
+    public List<Room> getAvailableRooms(LocalDate from, LocalDate to) {
+
+        if (from == null || to == null) {
+            throw new IllegalArgumentException("Parameters can't be null");
+        }
+
+        if (to.isBefore(from)) {
+            throw new IllegalArgumentException("End date can't be before start date");
+        }
+
+        List<Room> availableRooms = this.repository.getAllRooms();
+
+        LocalDateTime fromWithHour = from.atTime(SystemUtils.HOTEL_NIGHT_START_HOUR, SystemUtils.HOTEL_NIGHT_START_MINUTE);
+        LocalDateTime toWithHour = to.atTime(SystemUtils.HOTEL_NIGHT_END_HOUR, SystemUtils.HOTEL_NIGHT_END_MINUTE);
+
+        if (this.reservationService == null) {
+            this.reservationService = ObjectPool.getReservationService();
+        }
+        List<Reservation> reservations = this.reservationService.getAllReservations();
+
+        for (Reservation reservation : reservations) {
+            if (reservation.getFrom().isEqual(fromWithHour)) {
+                availableRooms.remove(reservation.getRoom());
+            } else if (reservation.getTo().isEqual(toWithHour)) {
+                availableRooms.remove(reservation.getRoom());
+            } else if (reservation.getFrom().isAfter(fromWithHour) && reservation.getFrom().isBefore(toWithHour)) {
+                availableRooms.remove(reservation.getRoom());
+            } else if (reservation.getTo().isAfter(fromWithHour) && reservation.getTo().isBefore(toWithHour)) {
+                availableRooms.remove(reservation.getRoom());
+            } else if (fromWithHour.isAfter(reservation.getFrom()) && toWithHour.isBefore(reservation.getTo())) {
+                availableRooms.remove(reservation.getRoom());
+            }
+        }
+
+        return availableRooms;
     }
+
+    public List<RoomDTO> getAvailableRoomsAsDTO(LocalDate from, LocalDate to) {
+        List<Room> availableRooms = this.getAvailableRooms(from, to);
+        List<RoomDTO> result = new ArrayList<>();
+
+        for (Room room : availableRooms) {
+            result.add(room.generateDTO());
+        }
+
+        return result;
+    }
+
+    public void setRepository(RoomRepository roomRepository) {
+        this.repository = roomRepository;
+    }
+
+    public void setReservationService(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
+
 
 }

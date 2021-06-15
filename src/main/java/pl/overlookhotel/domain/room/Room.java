@@ -4,17 +4,22 @@ import pl.overlookhotel.domain.room.dto.RoomDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Room {
 
     private final long id;
-    private  int number;
-    private  List<BedType> beds;
+    private int number;
+    private List<BedType> beds;
 
     Room(long id, int number, List<BedType> bedTypes) {
         this.id = id;
         this.number = number;
-        this.beds = bedTypes;
+        if (bedTypes == null) {
+            this.beds = new ArrayList<>();
+        } else {
+            this.beds = bedTypes;
+        }
     }
 
     public String getInfo() {
@@ -24,7 +29,7 @@ public class Room {
             bedInfo.append("\t ").append(bed.getDescription()).append("\n");
         }
 
-        return String.format("%d Numer: %d %s",this.id, this.number, bedInfo);
+        return String.format("%d Numer: %d %s", this.id, this.number, bedInfo);
     }
 
     String toCSV() {
@@ -60,18 +65,35 @@ public class Room {
 
         String bedTypes = String.join(",", bedsAsString);
 
-    return new RoomDTO(this.id, this.number, bedTypes, beds.size());
+        return new RoomDTO(this.id, this.number, bedTypes, beds.size());
     }
 
     void addBed(BedType bedType) {
-    this.beds.add(bedType);
+        this.beds.add(bedType);
     }
 
     void setNumber(int number) {
-    this.number = number;
+        this.number = number;
     }
 
     public void setBeds(List<BedType> bedTypes) {
-    this.beds = bedTypes;
+        this.beds = bedTypes;
+    }
+
+    public List<BedType> getBeds() {
+        return this.beds;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return id == room.id && number == room.number;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, number);
     }
 }
