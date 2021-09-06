@@ -26,8 +26,18 @@ public class App extends Application {
         try {
             SystemUtils systemUtils = new SystemUtils();
             SystemUtils.createDataDirectory();
-            systemUtils.createDatabaseConnection();
+//            systemUtils.createDatabaseConnection();
             System.out.println("Trwa ładowanie danych...");
+//            GuestJpaRepository jpaRepository = new GuestJpaRepository();
+//            Guest newGuest = jpaRepository.createNewGuest("Marcin", "Pypeć", 23, Gender.MALE);
+//            List<Guest> allGuests = jpaRepository.getAll();
+//            for( Guest guest : allGuests){
+//                System.out.println(guest.getInfo());
+//            }
+//
+////            jpaRepository.remove(newGuest.getId());
+//            jpaRepository.edit(newGuest.getId(), "Tony", "Stark", 33, Gender.MALE);
+
             guestService.readAll();
             roomService.readAll();
             reservationService.readAll();

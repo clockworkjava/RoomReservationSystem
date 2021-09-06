@@ -70,9 +70,12 @@ public class GuestService {
 
         List<Guest> allGuests = repository.getAll();
 
-        for (Guest guest : allGuests) {
-            GuestDTO dto = guest.generateDTO();
-            result.add(dto);
+        if (allGuests != null){
+
+            for (Guest guest : allGuests) {
+                GuestDTO dto = guest.generateDTO();
+                result.add(dto);
+            }
         }
         return result;
     }

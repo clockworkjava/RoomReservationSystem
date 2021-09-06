@@ -1,15 +1,23 @@
 package pl.overlookhotel.domain.room;
 
+import javafx.application.Platform;
 import pl.overlookhotel.domain.room.dto.RoomDTO;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Room {
 
-    private final long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     private int number;
+
+    @ElementCollection(targetClass = BedType.class)
     private List<BedType> beds;
 
     Room(long id, int number, List<BedType> bedTypes) {
@@ -20,6 +28,14 @@ public class Room {
         } else {
             this.beds = bedTypes;
         }
+    }
+
+    public Room(int number, List<BedType> beds) {
+        this.number = number;
+        this.beds = beds;
+    }
+
+    public Room() {
     }
 
     public String getInfo() {

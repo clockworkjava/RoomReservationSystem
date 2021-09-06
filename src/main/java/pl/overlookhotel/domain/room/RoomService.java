@@ -116,9 +116,12 @@ public class RoomService {
 
         List<Room> allRooms = repository.getAllRooms();
 
-        for (Room room : allRooms) {
-            RoomDTO dto = room.generateDTO();
-            result.add(dto);
+        if (allRooms != null){
+
+            for (Room room : allRooms) {
+                RoomDTO dto = room.generateDTO();
+                result.add(dto);
+            }
         }
 
         return result;

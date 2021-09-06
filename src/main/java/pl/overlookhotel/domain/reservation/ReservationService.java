@@ -57,10 +57,14 @@ public class ReservationService {
 
         List<Reservation> allReservations = this.repository.getAllReservations();
 
-        for (Reservation reservation : allReservations){
-            ReservationDTO dto = reservation.getAsDTO();
-            result.add(dto);
+        if (allReservations != null){
+
+            for (Reservation reservation : allReservations){
+                ReservationDTO dto = reservation.getAsDTO();
+                result.add(dto);
+            }
         }
+
         return result;
     }
 
